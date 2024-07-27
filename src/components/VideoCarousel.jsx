@@ -75,9 +75,33 @@ const VideoCarousel = () => {
           }
         },
         onComplete: () => {
+          if (isPlaying) {
+            gsap.to(videoDivRef.current[videoId], {
+              width: '12px',
+            })
 
+            gsap.to(span[videoId], {
+              backgroundColor: '#afafaf'
+            })
+          }
         }
       })
+
+      if (videoId=== 0) {
+        anim.restart();
+      }
+
+      const animeUpdate = () => {
+        anim.progress(videoRef.current[videoId] / 
+        hightlightsSlides[videoId].videoDuration)
+      }
+  
+      if (isPlaying) {
+        gsap.ticker.add(animeUpdate)
+      } else {
+        gsap.ticker.remove(animeUpdate)
+      }
+      
     }
   }, [videoId, startPlay])
 
